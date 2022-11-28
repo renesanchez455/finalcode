@@ -1,0 +1,90 @@
+<!-- CMPS3162 - Final Project
+Joanne Yong & Rene Sanchez
+2019120152  & 2018118383 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Ratings</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">Create Movie Ratings</a></h1>
+    </header>
+    <nav>
+        <div>
+            <a href="/">Home</a>
+            {{ if .IsAuthenticated }}
+            <a href="/movie/create">Create Movie Rating</a>
+            {{ end }}
+        </div>
+        <div>
+            {{ if .IsAuthenticated }}
+            <form action="/user/logout" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
+                <button>Logout</button>
+            </form>
+            {{ else }}
+            <a href="/user/signup">Signup</a>
+            <a href="/user/login">Login</a>
+             {{ end }}
+        </div>
+    </nav>
+    <form action="/movie/create" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
+        <div>
+            <label>Movie Name</label><br>
+            {{ with .ErrorsFromForm.movie_name }}
+                <label class="error">{{ . }}</label>
+            {{end}}
+            <input type="text" size="100" name="movie_name" value="{{ .FormData.Get "movie_name" }}">
+        </div>
+        <div>
+            <label>Director(s)</label><br>
+            {{ with .ErrorsFromForm.director_name }}
+                <label class="error">{{ . }}</label>
+            {{end}}
+            <input type="text" size="75" name="director_name" value="{{ .FormData.Get "director_name" }}">
+        </div>
+        <div>
+            <label>Release Date</label><br>
+            {{ with .ErrorsFromForm.release_date }}
+                <label class="error">{{ . }}</label>
+            {{end}}
+            <input type="text" size="10" name="release_date" placeholder="yyyy/mm/dd" value="{{ .FormData.Get "release_date" }}">
+        </div>
+        <div>
+            <label>Movie Rating</label><br>
+            {{ with .ErrorsFromForm.movie_rating }}
+                <label class="error">{{ . }}</label>
+            {{end}}
+            <select name="movie_rating" value="{{ .FormData.Get "movie_rating" }}">
+                <option value="" selected="selected">Select Rating</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div>
+            <label>Movie Review</label><br>
+            {{ with .ErrorsFromForm.movie_review }}
+                <label class="error">{{ . }}</label>
+            {{end}}
+            <input type="text" size="300" name="movie_review" width="100px" value="{{ .FormData.Get "movie_review" }}">
+        </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div><br>
+    </form>
+    <hr>
+    <footer>
+        <p>
+            <a href="mailto:2018118383@ub.edu.bz">2018118383@ub.edu.bz</a><br>
+            <a href="mailto:2019120152@ub.edu.bz">2019120152@ub.edu.bz</a>
+        </p>
+    </footer>
+</body>
+</html>

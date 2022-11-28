@@ -1,0 +1,56 @@
+<!-- CMPS3162 - Final Project
+Joanne Yong & Rene Sanchez
+2019120152  & 2018118383 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Ratings</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">Movie Ratings</a></h1>
+    </header>
+    <nav>
+        <div>
+            <a href="/">Home</a>
+            {{ if .IsAuthenticated }}
+            <a href="/movie/create">Create Movie Rating</a>
+            {{ end }}
+        </div>
+        <div>
+            {{ if .IsAuthenticated }}
+            <form action="/user/logout" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
+                <button>Logout</button>
+            </form>
+            {{ else }}
+            <a href="/user/signup">Signup</a>
+            <a href="/user/login">Login</a>
+            {{ end }}
+        </div>
+    </nav>
+    {{ with .Flash }}
+    <div class="flash">{{ . }}</div>
+    {{ end }}
+
+    <div>
+    {{ with .Rating }}
+    <ul>
+        <li><b>Movie Name: </b>{{ .Movie_name}}<br>
+        <b>Director Name: </b>{{.Director_name}}<br>
+        <b>Release Date: </b>{{.Release_date}}<br>
+        <b>Movie Rating: </b>{{.Movie_rating}}<br>
+        <b>Movie Review: </b>{{.Movie_review}}<br></li>
+    </ul>
+    {{ end }}
+    </div>
+    <footer>
+         <p>
+            <a href="mailto:2018118383@ub.edu.bz">2018118383@ub.edu.bz</a><br>
+            <a href="mailto:2019120152@ub.edu.bz">2019120152@ub.edu.bz</a>
+        </p>
+    </footer>
+</body>
+</html>
